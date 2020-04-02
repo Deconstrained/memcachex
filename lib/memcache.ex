@@ -1,4 +1,5 @@
 defmodule Memcache do
+  require Logger
   @moduledoc """
   This module provides a user friendly API to interact with the
   memcached server.
@@ -142,6 +143,7 @@ defmodule Memcache do
       |> Keyword.update!(:coder, &normalize_coder/1)
 
     {state, connection_options} = Keyword.split(connection_options, extra_opts)
+    Logger.info("Starting memcache connection with connection_options=#{inspect(connection_options)}, options=#{inspect(options)}")
     {:ok, pid} = Connection.start_link(connection_options, options)
 
     state =
